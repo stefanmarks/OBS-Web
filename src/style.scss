@@ -13,6 +13,27 @@ $footer-padding: 3rem 1.5rem;
   }
 }
 
+.button .icon {
+  width: 2em;
+}
+
 .rotate {
   animation: rotating 10s linear infinite;
+}
+
+body {
+  background-color: white;
+} 
+
+body.connected {
+  background-color: #C0F0C0;
+} 
+
+body.recording {
+  animation: recordingOn 2s steps(2, jump-none) infinite;
+}
+
+@keyframes recordingOn {
+  from {background-color: #FFC0C0;}
+  to   {background-color: #FF8080;}
 }

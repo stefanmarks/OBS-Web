@@ -129,6 +129,12 @@
       : `${mins < 10 ? '0' : ''}${mins}:${secs < 10 ? '0' : ''}${secs}`
   }
 
+  function getCurrentTime () {
+    const time = new Date()
+    return String(time.getHours()).padStart(2, '0') + ":" +
+           String(time.getMinutes()).padStart(2, '0')
+  }
+
   function toggleFullScreen () {
     if (isFullScreen) {
       if (document.exitFullscreen) {
@@ -234,16 +240,19 @@
   // OBS events
   obs.on('ConnectionClosed', () => {
     connected = false
+    window.document.body.classList.remove('connected')
     window.history.pushState(
       '',
       document.title,
       window.location.pathname + window.location.search
     ) // Remove the hash
     console.log('Connection closed')
+    window.document.getElementById('navbarTitle').innerHTML='OBS-Web'
   })
 
   obs.on('Identified', async () => {
     console.log('Connected')
+    window.document.body.classList.add('connected')
     connected = true
     document.location.hash = address // For easy bookmarking
     const data = await sendCommand('GetVersion')
@@ -270,7 +279,10 @@
       const streaming = await sendCommand('GetStreamStatus')
       const recording = await sendCommand('GetRecordStatus')
       heartbeat = { stats, streaming, recording }
+      if (recording.outputActive) { window.document.body.classList.add('recording') } 
+      else                        { window.document.body.classList.remove('recording') }
       // console.log(heartbeat);
+      window.document.getElementById('navbarTitle').innerHTML=getCurrentTime()
     }, 1000) // Heartbeat
     isStudioMode =
       (await sendCommand('GetStudioModeEnabled')).studioModeEnabled || false
@@ -302,18 +314,19 @@
     console.log('ReplayBufferStateChanged', data)
     isReplaying = data && data.outputActive
   })
+
 </script>
 
 <svelte:head>
-  <title>OBS-web remote control</title>
+  <title>OBS-Web Remote Control</title>
 </svelte:head>
 
 <nav class="navbar is-primary" aria-label="main navigation">
   <div class="navbar-brand">
     <a class="navbar-item is-size-4 has-text-weight-bold" href="/">
-      <img src="favicon.png" alt="OBS-web" class="rotate" /></a
-    >
-
+      <!--<img src="favicon.png" alt="OBS-web" class="rotate" />-->
+      <h1 id='navbarTitle'>OBS-Web</h1>
+    </a>
     <!-- svelte-ignore a11y-missing-attribute -->
     <button
       class="navbar-burger burger"
@@ -333,6 +346,7 @@
         <div class="buttons">
           <!-- svelte-ignore a11y-missing-attribute -->
           {#if connected}
+<!--
             <button class="button is-info is-light" disabled>
               {#if heartbeat && heartbeat.stats}
                 {Math.round(heartbeat.stats.activeFps)} fps, {Math.round(
@@ -358,6 +372,7 @@
                 <span class="icon"><Icon path={mdiAccessPoint} /></span>
               </button>
             {/if}
+-->
             {#if heartbeat && heartbeat.recording && heartbeat.recording.outputActive}
               {#if heartbeat.recording.outputPaused}
                 <button
@@ -410,6 +425,7 @@
                 <span class="icon"><Icon path={mdiCamera} /></span>
               </button>
             {/if}
+<!--
             <button
               class:is-light={!isStudioMode}
               class="button is-link"
@@ -466,6 +482,7 @@
             </button>
             <ProfileSelect />
             <SceneCollectionSelect />
+-->
             <button
               class="button is-danger is-light"
               on:click={disconnect}
@@ -519,6 +536,7 @@
         {/if}
       {/each}
     {:else}
+<!--
       <h1 class="subtitle">
         Welcome to
         <strong>OBS-web</strong>
@@ -553,6 +571,8 @@
       {/if}
 
       <p>To get started, enter your OBS host:port below and click "connect".</p>
+-->
+      <p>Enter your OBS host:port below and click "connect".</p>
 
       <form on:submit|preventDefault={connect}>
         <div class="field is-grouped">
@@ -579,6 +599,7 @@
           </p>
         </div>
       </form>
+<!--
       <p class="help">
         Make sure that you use <a
           href="https://github.com/obsproject/obs-studio/releases">OBS v28+</a
@@ -593,19 +614,7 @@
         for v27. If you use an older version of OBS, see the
         <a href="/v4/">archived OBS-web v4</a> page.
       </p>
+-->
     {/if}
   </div>
 </section>
-
-<footer class="footer">
-  <div class="content has-text-centered">
-    <p>
-      <strong>OBS-web</strong>
-      by
-      <a href="https://niekvandermaas.nl/">Niek van der Maas</a>
-      &mdash; see
-      <a href="https://github.com/Niek/obs-web">GitHub</a>
-      for source code.
-    </p>
-  </div>
-</footer>
