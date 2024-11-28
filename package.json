@@ -8,9 +8,9 @@
     "lint": "npx standard --fix && npx standard --parser svelte-eslint-parser --plugin svelte '**/*.svelte' --fix"
   },
   "devDependencies": {
-    "@fullhuman/postcss-purgecss": "^5.0.0",
+    "@fullhuman/postcss-purgecss": "^6.0.0",
     "@mdi/js": "^7.4.47",
-    "@rollup/plugin-commonjs": "^25.0.7",
+    "@rollup/plugin-commonjs": "^28.0.1",
     "@rollup/plugin-html": "^1.0.4",
     "@rollup/plugin-node-resolve": "^15.3.0",
     "@rollup/plugin-terser": "^0.4.4",
@@ -19,17 +19,17 @@
     "eslint-plugin-svelte": "^2.44.1",
     "mdi-svelte": "^1.1.2",
     "obs-websocket-js": "^5.0.1",
-    "postcss": "^8.4.47",
+    "postcss": "^8.4.49",
     "rollup": "^4",
     "rollup-plugin-livereload": "^2.0.5",
     "rollup-plugin-polyfill-node": "^0.13.0",
     "rollup-plugin-postcss": "^4.0.2",
     "rollup-plugin-svelte": "^7.2.0",
-    "sass": "^1.79.3",
+    "sass": "^1.81.0",
     "standard": "^17.1.2",
     "svelte": "^4.2.19"
   },
   "dependencies": {
-    "sirv-cli": "^2.0.2"
+    "sirv-cli": "^3"
   }
 }
