@@ -8,8 +8,11 @@ import purgecss from '@fullhuman/postcss-purgecss'
 import nodePolyfills from 'rollup-plugin-polyfill-node'
 import html from '@rollup/plugin-html'
 
+import pkg from './package.json' assert { type: 'json' }
+const __APP_NAME__    = `${pkg.name}`
+const __APP_VERSION__ = `${pkg.version}`
+
 const production = !process.env.ROLLUP_WATCH
-const version = require('fs').existsSync('.git') ? String(require('child_process').execSync('git rev-parse --short HEAD')).trim() : 'static' // append short git commit to bundles
 
 export default {
   input: 'src/main.js',
@@ -17,7 +20,7 @@ export default {
     sourcemap: !production,
     format: 'iife',
     name: 'app',
-    file: 'public/bundle-v' + version + '.js'
+    file: 'public/' + __APP_NAME__ + '-v' + __APP_VERSION__ + '.js'
   },
   plugins: [
     svelte({
@@ -59,16 +62,15 @@ export default {
 <head>
   <meta charset='utf-8'>
   <meta name='viewport' content='width=device-width,initial-scale=1'>
-  <meta name='"mobile-web-app-capable' content='yes'>
+  <meta name='mobile-web-app-capable' content='yes'>
 
-  <title>OBS-web</title>
+  <title>OBS-Web</title>
 
   <link rel='icon' type='image/png' href='favicon.png'>
   ${css}
   <link rel='manifest' href='manifest.json'>
   ${script}
 </head>
-
 <body>
 </body>
 </html>`

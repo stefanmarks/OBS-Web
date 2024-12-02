@@ -1,4 +1,4 @@
 /node_modules/
-/public/bundle-*
+/public/obs-web-*
 /public/index.html
 .DS_Store

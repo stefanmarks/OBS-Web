@@ -1,7 +1,8 @@
 <script>
   /* eslint-env browser */
   const OBS_WEBSOCKET_LATEST_VERSION = '5.0.1' // https://api.github.com/repos/Palakis/obs-websocket/releases/latest
-
+  const __APP_VERSION__              = '2024.12'
+  
   // Imports
   import { onMount } from 'svelte'
   import {
@@ -348,7 +349,7 @@
 <nav class="navbar is-primary" aria-label="main navigation">
   <div class="navbar-brand">
     <a class="navbar-item is-size-4 has-text-weight-bold" href="/">
-      <!--<img src="favicon.png" alt="OBS-web" class="rotate" />-->
+      <img src="favicon.png" alt="OBS-web" />&nbsp;
       <h1 id='navbarTitle'>OBS-Web</h1>
     </a>
     <!-- svelte-ignore a11y-missing-attribute -->
@@ -657,6 +658,7 @@
         <a href="/v4/">archived OBS-web v4</a> page.
       </p>
 -->
+      <p class="help">Build: {__APP_VERSION__}</p>
     {/if}
   </div>
 </section>
