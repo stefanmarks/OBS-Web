@@ -1,6 +1,6 @@
 {
   "name": "obs-web",
-  "version": "2024.12",
+  "version": "2025.03",
   "scripts": {
     "build": "rollup -c --bundleConfigAsCjs",
     "dev": "rollup -c -w --bundleConfigAsCjs",
