@@ -139,7 +139,7 @@
     flex-wrap: wrap;
     align-content: space-between;
     gap: .5rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
   }
   li {
     max-width: 192px;
