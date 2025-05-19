@@ -20,7 +20,8 @@ export default {
     sourcemap: !production,
     format: 'iife',
     name: 'app',
-    file: 'public/' + __APP_NAME__ + '-v' + __APP_VERSION__ + '.js'
+    // file: 'public/' + __APP_NAME__ + '-v' + __APP_VERSION__ + '.js'
+    file: 'public/' + __APP_NAME__ + '.js'
   },
   plugins: [
     svelte({
@@ -48,37 +49,34 @@ export default {
       template: async ({ attributes, files, meta, publicPath, title }) => {
         const script = (files.js || [])
           .map(({ fileName }) => {
-            return `<script defer src='${fileName}'></script>`
+            return `<script defer src="${fileName}"></script>`
           })
           .join('\n')
 
         const css = (files.css || [])
           .map(({ fileName }) => {
-            return `<link rel='stylesheet' href='${fileName}'>`
+            return `<link rel="stylesheet" href="${fileName}" />`
           })
           .join('\n')
-        return `<!DOCTYPE html>
+        return `<!doctype html>
 <html lang="en">
-<head>
-  <meta charset='utf-8'>
-  <meta name='viewport' content='width=device-width,initial-scale=1'>
-  <meta name='mobile-web-app-capable' content='yes'>
-
-  <title>OBS-Web</title>
-
-  <link rel='icon' type='image/png' href='favicon.png'>
-  ${css}
-  <link rel='manifest' href='manifest.json'>
-  ${script}
-</head>
-<body>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <title>OBS-Web</title>
+    <link rel="icon" type="image/png" href="favicon.png" />
+    ${css}
+    <link rel="manifest" href="manifest.json" />
+    ${script}
+  </head>
+  <body></body>
 </html>`
       }
     }),
     !production && serve(),
-    !production && livereload('public'),
-    production && terser()
+    !production && livereload('public')
+    //production && terser()
   ],
   watch: {
     clearScreen: false

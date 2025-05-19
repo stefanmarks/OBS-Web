@@ -1,7 +1,7 @@
 <script>
   /* eslint-env browser */
   const OBS_WEBSOCKET_LATEST_VERSION = '5.0.1' // https://api.github.com/repos/Palakis/obs-websocket/releases/latest
-  const __APP_VERSION__              = '2025.03'
+  const __APP_VERSION__              = '2025.05'
   
   // Imports
   import { onMount } from 'svelte'
@@ -90,6 +90,9 @@
       }
       await connect()
     }
+	else if ( window.location.hostname !== '') {
+	  address = "ws://" + window.location.hostname + ":4455"
+	}
 
     // Export the sendCommand() function to the window object
     window.sendCommand = sendCommand
